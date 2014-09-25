@@ -13,7 +13,7 @@ Depending on the target host, the following options are available :
 * _overtherepy.CifsConnectionOptions_
 * _overtherepy.LocalConnectionOptions_
 
-Please refer to the [Overthere](http://https://github.com/xebialabs/overthere) documentation for available options. Options are passed to the contructor as named parametes
+Please refer to the [Overthere](http://https://github.com/xebialabs/overthere) documentation for available options. Options are passed to the contructor as named parameters
 
 <pre>
 from overtherepy import LocalConnectionOptions, OverthereHost, OverthereHostSession
