@@ -1,8 +1,15 @@
 language: java
-
 before_install:
-  - sudo apt-get install jython
-  - echo jythonInterpreter=jython >> ~/.gradle/gradle.properties
-
+- sudo apt-get install jython
+- echo jythonInterpreter=jython >> ~/.gradle/gradle.properties
 script: gradle check -PjythonInterpreter=jython
-
+deploy:
+  provider: releases
+  api_key:
+    secure: NAKq756CYk1hLJB22264cx7a8R7xk9PL6pwpUOVQkPXLe1YvZ+Nd9/nYhY9N4axNEgvJJppxOwhvQ6D47o3M3uAzbdElPg2fa08TiCtmnPAWOJdOBIqiyM3Z8dkIBubkMJ2qbdwlu3OUz/R01ZTGtD35uQ05SAPipI+6zzlv/IY=
+  file: build/libs/overthere-pylib-0.0.1.jar
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/overthere-pylib
