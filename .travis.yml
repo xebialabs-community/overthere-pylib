@@ -2,5 +2,5 @@ language: java
 
 before_install: sudo apt-get install jython
 
-script: gradle check -PjythonIntepreter=jython
+script: gradle check -PjythonInterpreter=jython
 
