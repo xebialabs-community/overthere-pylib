@@ -1,0 +1,47 @@
+defaultTasks 'check'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0"
+    }
+}
+
+apply plugin: "com.github.hierynomus.license"
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.xebialabs.deployit.community'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.xebialabs.overthere:overthere:2.4.4"
+    compile "org.python:jython:2.5.3"
+    testCompile "junit:junit:4.11"
+}
+
+sourceSets.main.resources.srcDirs = ["src/main/jython", "src/main/resources"]
+sourceSets.test.resources.srcDirs = ["src/test/jython", "src/test/resources"]
+
+task testJython(type: Exec, dependsOn: ['testClasses']) {
+    environment = ["CLASSPATH": sourceSets.test.runtimeClasspath.asPath, "PATH": System.getenv("PATH")]
+    commandLine jythonInterpreter, "$projectDir/src/test/jython/noserunner/runtests.py", "$projectDir/src/test/jython/test_overtherepy", buildDir
+    workingDir = projectDir
+}
+
+test.dependsOn testJython
+
+license {
+    header rootProject.file('src/main/license/xebialabs_community.license')
+    strictCheck true
+    exclude('testfiles/*')
+}
