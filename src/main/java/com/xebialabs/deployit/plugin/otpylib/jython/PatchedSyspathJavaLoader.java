@@ -4,7 +4,7 @@
  * FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
  */
 
-package com.xebialabs.deployit.plugin.jython;
+package com.xebialabs.deployit.plugin.otpylib.jython;
 
 import java.io.File;
 import java.io.IOException;

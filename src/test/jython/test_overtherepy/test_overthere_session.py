@@ -9,7 +9,7 @@ import os
 from overtherepy import LocalConnectionOptions, OverthereHost, OverthereHostSession
 from com.xebialabs.overthere import OperatingSystemFamily
 
-from  nose.tools import ok_, eq_
+from nose.tools import ok_, eq_
 
 class TestOverthereSession(object):
 

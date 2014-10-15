@@ -6,7 +6,7 @@
 
 from java.lang import Thread
 from org.python.core.imp import getSyspathJavaLoader
-from com.xebialabs.deployit.plugin.jython import PatchedSyspathJavaLoader
+from com.xebialabs.deployit.plugin.otpylib.jython import PatchedSyspathJavaLoader
 
 Thread.currentThread().contextClassLoader = PatchedSyspathJavaLoader(getSyspathJavaLoader())
 

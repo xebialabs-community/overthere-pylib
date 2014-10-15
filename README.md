@@ -52,19 +52,6 @@ else:
 session.close_conn()
 </pre>
 
-Current methods on OverthereHostSession
+### API
 
-* is_windows(): Boolean
-* get_conn(): OverthereConnection
-* close_conn()
-* work_dir(): OverthereFile
-* work_dir_file(filepath: String): OverthereFile
-* remote_file(filepath: String): OverthereFile
-* local_file(filepath: String): OverthereFile
-* read_file(filepath: String): String
-* read_file_lines(filepath:String): String[]
-* copy_to(source: OverthereFile, target: OverthereFile)
-* upload_text_content_to_work_dir(content: String, filename: String, executable: Boolean)
-* upload_classpath_resource_to_work_dir(resource:String, executable:Boolean)
-* upload_file_to_work_dir(source:OverthereFile, executable:Boolean)
-* execute(cmd:String[]): Dictionary with 'rc', 'stdout', 'stderr' keys
+<a href="./api-docs/overtherepy.html">Overthere Module Api Documentation</a>
