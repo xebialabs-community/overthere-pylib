@@ -12,21 +12,21 @@
 <dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="overtherepy.html#CommandResponse">CommandResponse</a>
-</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="#CommandResponse">CommandResponse</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#LocalConnectionOptions">LocalConnectionOptions</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="overtherepy.html#CifsConnectionOptions">CifsConnectionOptions</a>
-</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#SshConnectionOptions">SshConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="#CifsConnectionOptions">CifsConnectionOptions</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#SshConnectionOptions">SshConnectionOptions</a>
 </font></dt></dl>
 </dd>
 </dl>
 </dd>
-<dt><font face="helvetica, arial"><a href="overtherepy.html#OverthereHost">OverthereHost</a>
-</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#OverthereHostSession">OverthereHostSession</a>
+<dt><font face="helvetica, arial"><a href="#OverthereHost">OverthereHost</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#OverthereHostSession">OverthereHostSession</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -34,7 +34,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="CifsConnectionOptions">class <strong>CifsConnectionOptions</strong></a>(<a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="CifsConnectionOptions">class <strong>CifsConnectionOptions</strong></a>(<a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>CIFS&nbsp;Connection&nbsp;options.&nbsp;&nbsp;See&nbsp;https://github.com/xebialabs/overthere#cifs<br>
@@ -59,9 +59,9 @@ winrsNoprofile&nbsp;=&nbsp;False<br>
 winrsUnencrypted&nbsp;=&nbsp;False<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="overtherepy.html#CifsConnectionOptions">CifsConnectionOptions</a></dd>
-<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="#CifsConnectionOptions">CifsConnectionOptions</a></dd>
+<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -72,11 +72,11 @@ Methods defined here:<br>
 :param&nbsp;kwargs:&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh&nbsp;for&nbsp;options</tt></dd></dl>
 
 <hr>
-Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="CifsConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -238,14 +238,14 @@ Data descriptors defined here:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="RemoteConnectionOptions">class <strong>RemoteConnectionOptions</strong></a>(<a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="RemoteConnectionOptions">class <strong>RemoteConnectionOptions</strong></a>(<a href="#LocalConnectionOptions">LocalConnectionOptions</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;remote&nbsp;connection&nbsp;options<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -253,11 +253,11 @@ Methods defined here:<br>
 <dl><dt><a name="RemoteConnectionOptions-__init__"><strong>__init__</strong></a>(self, protocol, **kwargs)</dt></dl>
 
 <hr>
-Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="RemoteConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -268,7 +268,7 @@ Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="SshConnectionOptions">class <strong>SshConnectionOptions</strong></a>(<a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="SshConnectionOptions">class <strong>SshConnectionOptions</strong></a>(<a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>SSH&nbsp;Connection&nbsp;options.&nbsp;&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh<br>
@@ -294,9 +294,9 @@ suPasswordPromptRegex&nbsp;=&nbsp;".*[Pp]assword.*:"<br>
 suOverrideUmask&nbsp;=&nbsp;True<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="overtherepy.html#SshConnectionOptions">SshConnectionOptions</a></dd>
-<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="#SshConnectionOptions">SshConnectionOptions</a></dd>
+<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -307,11 +307,11 @@ Methods defined here:<br>
 :param&nbsp;kwargs:&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh&nbsp;for&nbsp;options</tt></dd></dl>
 
 <hr>
-Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="SshConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
