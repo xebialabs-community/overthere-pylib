@@ -34,7 +34,7 @@ sourceSets.test.resources.srcDirs = ["src/test/jython", "src/test/resources"]
 
 task testJython(type: Exec, dependsOn: ['testClasses']) {
     environment = ["CLASSPATH": sourceSets.test.runtimeClasspath.asPath, "PATH": System.getenv("PATH"), "HOME": System.getenv("HOME")]
-    commandLine jythonInterpreter, "$projectDir/src/test/jython/noserunner/runtests.py", "$projectDir/src/test/jython/test_overtherepy", buildDir
+    commandLine jythonInterpreter, "$projectDir/src/test/jython/xlnoserunner/runtests.py", "$projectDir/src/test/jython/test_overtherepy", buildDir
     workingDir = projectDir
 }
 

@@ -6,7 +6,7 @@
 
 import os
 import sys
-from noserunner import LocalEZSetup
+from xlnoserunner import LocalEZSetup
 
 local_ez_setup = LocalEZSetup(os.getcwdu())
 nose = local_ez_setup.ensure_module('nose')

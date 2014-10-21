@@ -1,5 +1,3 @@
-<html><head><title>Python: package overtherepy</title>
-</head><body bgcolor="#f0f0f8">
 
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -13,6 +11,7 @@
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="#CommandResponse">CommandResponse</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#Diff">Diff</a>
 </font></dt><dt><font face="helvetica, arial"><a href="#LocalConnectionOptions">LocalConnectionOptions</a>
 </font></dt><dd>
 <dl>
@@ -27,6 +26,8 @@
 </dd>
 <dt><font face="helvetica, arial"><a href="#OverthereHost">OverthereHost</a>
 </font></dt><dt><font face="helvetica, arial"><a href="#OverthereHostSession">OverthereHostSession</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#OverthereSessionLogger">OverthereSessionLogger</a>
+</font></dt><dt><font face="helvetica, arial"><a href="#StringUtils">StringUtils</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -113,6 +114,37 @@ Data descriptors defined here:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Diff">class <strong>Diff</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Contains&nbsp;the&nbsp;difference&nbsp;between&nbsp;two&nbsp;folders.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Diff-__init__"><strong>__init__</strong></a>(self, old, new)</dt><dd><tt>Constructor<br>
+:param&nbsp;old:&nbsp;com.xebialabs.overthere.OverthereFile&nbsp;folder&nbsp;with&nbsp;old&nbsp;content<br>
+:param&nbsp;new:&nbsp;com.xebialabs.overthere.OverthereFile&nbsp;folder&nbsp;with&nbsp;new&nbsp;content</tt></dd></dl>
+
+<dl><dt><a name="Diff-strip_new_path_prefix"><strong>strip_new_path_prefix</strong></a>(self, new_file)</dt></dl>
+
+<dl><dt><a name="Diff-strip_old_path_prefix"><strong>strip_old_path_prefix</strong></a>(self, old_file)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Diff-calculate_diff"><strong>calculate_diff</strong></a>(old, new)</dt><dd><tt>Calculates&nbsp;the&nbsp;differences&nbsp;between&nbsp;two&nbsp;folders.<br>
+:return:&nbsp;<a href="#Diff">Diff</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;added,&nbsp;removed&nbsp;and&nbsp;changed&nbsp;attributes.&nbsp;Each&nbsp;contain&nbsp;a&nbsp;list&nbsp;of&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="LocalConnectionOptions">class <strong>LocalConnectionOptions</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
@@ -167,17 +199,43 @@ Data descriptors defined here:<br>
 <td colspan=2><tt>Session&nbsp;with&nbsp;a&nbsp;target&nbsp;host<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, stream_command_output<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
+<dl><dt><a name="OverthereHostSession-__enter__"><strong>__enter__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OverthereHostSession-__exit__"><strong>__exit__</strong></a>(self, type, value, traceback)</dt></dl>
+
+<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, enable_logging<font color="#909090">=True</font>, stream_command_output<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
+:param&nbsp;enable_logging:&nbsp;Enables&nbsp;info&nbsp;logging&nbsp;to&nbsp;console.<br>
 :param&nbsp;stream_command_output:&nbsp;True&nbsp;when&nbsp;remote&nbsp;command&nbsp;execution&nbsp;output&nbsp;is&nbsp;to&nbsp;be&nbsp;send&nbsp;to&nbsp;stdout&nbsp;and&nbsp;stderr</tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-close_conn"><strong>close_conn</strong></a>(self)</dt><dd><tt>Close&nbsp;connection&nbsp;to&nbsp;target&nbsp;host</tt></dd></dl>
 
-<dl><dt><a name="OverthereHostSession-copy_to"><strong>copy_to</strong></a>(self, source_otfile, target_otfile)</dt><dd><tt>Copy&nbsp;the&nbsp;source&nbsp;file&nbsp;to&nbsp;the&nbsp;target&nbsp;file<br>
-:param&nbsp;source_otfile:&nbsp;com.xebialabs.overthere.OverthereFile<br>
-:param&nbsp;target_otfile:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
+<dl><dt><a name="OverthereHostSession-copy_diff"><strong>copy_diff</strong></a>(self, target_path, diff)</dt><dd><tt>Apply&nbsp;the&nbsp;changes&nbsp;represented&nbsp;by&nbsp;the&nbsp;<a href="#Diff">Diff</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;to&nbsp;the&nbsp;target&nbsp;path.<br>
+:param&nbsp;target_path:&nbsp;absolute&nbsp;path&nbsp;to&nbsp;folder&nbsp;on&nbsp;target&nbsp;system<br>
+:param&nbsp;diff:&nbsp;<a href="#Diff">Diff</a>&nbsp;containing&nbsp;all&nbsp;changes&nbsp;to&nbsp;be&nbsp;applied&nbsp;to&nbsp;target&nbsp;path</tt></dd></dl>
 
-<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
+<dl><dt><a name="OverthereHostSession-copy_text_to_file"><strong>copy_text_to_file</strong></a>(self, content, target, mkdirs<font color="#909090">=True</font>)</dt><dd><tt>Copies&nbsp;the&nbsp;content&nbsp;to&nbsp;the&nbsp;specified&nbsp;file<br>
+:param&nbsp;content:&nbsp;to&nbsp;write&nbsp;to&nbsp;file<br>
+:param&nbsp;target:&nbsp;com.xebialabs.overthere.OverthereFile<br>
+:param&nbsp;mkdirs:&nbsp;Automatically&nbsp;create&nbsp;target&nbsp;directory</tt></dd></dl>
+
+<dl><dt><a name="OverthereHostSession-copy_to"><strong>copy_to</strong></a>(self, source, target, mkdirs<font color="#909090">=True</font>)</dt><dd><tt>Copy&nbsp;the&nbsp;source&nbsp;file&nbsp;to&nbsp;the&nbsp;target&nbsp;file<br>
+:param&nbsp;source:&nbsp;com.xebialabs.overthere.OverthereFile<br>
+:param&nbsp;target:&nbsp;com.xebialabs.overthere.OverthereFile<br>
+:param&nbsp;mkdirs:&nbsp;Automatically&nbsp;create&nbsp;target&nbsp;directory<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="OverthereHostSession-delete_from"><strong>delete_from</strong></a>(self, source, target, target_dir_shared<font color="#909090">=False</font>)</dt><dd><tt>Uses&nbsp;the&nbsp;source&nbsp;directory&nbsp;to&nbsp;determine&nbsp;the&nbsp;files&nbsp;to&nbsp;delete&nbsp;from&nbsp;the&nbsp;target&nbsp;directory.<br>
+Only&nbsp;the&nbsp;immediate&nbsp;sub-directories&nbsp;and&nbsp;files&nbsp;in&nbsp;the&nbsp;source&nbsp;directory&nbsp;base&nbsp;are&nbsp;used.<br>
+If&nbsp;the&nbsp;target&nbsp;is&nbsp;a&nbsp;file,&nbsp;then&nbsp;it&nbsp;is&nbsp;deleted&nbsp;without&nbsp;analysing&nbsp;the&nbsp;source.<br>
+When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nbsp;directory&nbsp;after&nbsp;deleting&nbsp;source&nbsp;files&nbsp;from&nbsp;it,&nbsp;the&nbsp;target&nbsp;is&nbsp;not&nbsp;deleted.<br>
+:param&nbsp;source:&nbsp;directory&nbsp;of&nbsp;files&nbsp;to&nbsp;be&nbsp;deleted.<br>
+:param&nbsp;target:&nbsp;directory&nbsp;or&nbsp;file&nbsp;to&nbsp;be&nbsp;deleted.<br>
+:param&nbsp;target_dir_shared:&nbsp;When&nbsp;True,&nbsp;the&nbsp;target&nbsp;directory&nbsp;itself&nbsp;will&nbsp;not&nbsp;be&nbsp;deleted.<br>
+:return:</tt></dd></dl>
+
+<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
 :param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings<br>
+:param&nbsp;check_success:&nbsp;checks&nbsp;the&nbsp;return&nbsp;code&nbsp;is&nbsp;0.&nbsp;On&nbsp;failure&nbsp;the&nbsp;output&nbsp;is&nbsp;printed&nbsp;to&nbsp;stdout&nbsp;and&nbsp;a&nbsp;system&nbsp;exit&nbsp;is&nbsp;performed<br>
 :return:&nbsp;<a href="#CommandResponse">CommandResponse</a></tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-get_conn"><strong>get_conn</strong></a>(self)</dt><dd><tt>Get&nbsp;connection&nbsp;to&nbsp;host.&nbsp;&nbsp;Create&nbsp;new&nbsp;connection&nbsp;if&nbsp;one&nbsp;does&nbsp;not&nbsp;exist.<br>
@@ -185,8 +243,8 @@ Data descriptors defined here:<br>
 
 <dl><dt><a name="OverthereHostSession-is_windows"><strong>is_windows</strong></a>(self)</dt><dd><tt>:return:&nbsp;True&nbsp;if&nbsp;target&nbsp;host&nbsp;is&nbsp;a&nbsp;Windows&nbsp;machine</tt></dd></dl>
 
-<dl><dt><a name="OverthereHostSession-local_file"><strong>local_file</strong></a>(self, filepath)</dt><dd><tt>Get&nbsp;reference&nbsp;to&nbsp;local&nbsp;file<br>
-:param&nbsp;filepath:&nbsp;absolute&nbsp;path&nbsp;on&nbsp;local&nbsp;system<br>
+<dl><dt><a name="OverthereHostSession-local_file"><strong>local_file</strong></a>(self, file)</dt><dd><tt>Get&nbsp;reference&nbsp;to&nbsp;local&nbsp;file&nbsp;as&nbsp;an&nbsp;OverthereFile<br>
+:param&nbsp;file:&nbsp;java.util.File<br>
 :return:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-read_file"><strong>read_file</strong></a>(self, filepath, encoding<font color="#909090">='UTF-8'</font>)</dt><dd><tt>Reads&nbsp;the&nbsp;content&nbsp;of&nbsp;a&nbsp;remote&nbsp;file&nbsp;as&nbsp;a&nbsp;string<br>
@@ -225,6 +283,31 @@ Data descriptors defined here:<br>
 <dl><dt><a name="OverthereHostSession-work_dir_file"><strong>work_dir_file</strong></a>(self, filepath)</dt><dd><tt>Create&nbsp;a&nbsp;file&nbsp;in&nbsp;the&nbsp;session's&nbsp;working&nbsp;directory<br>
 :param&nbsp;filepath:&nbsp;relative&nbsp;path&nbsp;to&nbsp;working&nbsp;directory<br>
 :return:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="OverthereSessionLogger">class <strong>OverthereSessionLogger</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Simple&nbsp;class&nbsp;to&nbsp;log&nbsp;to&nbsp;console<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="OverthereSessionLogger-__init__"><strong>__init__</strong></a>(self, enabled<font color="#909090">=True</font>, capture<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;enabled:&nbsp;True&nbsp;to&nbsp;print&nbsp;informational&nbsp;log&nbsp;statements<br>
+:param&nbsp;capture:&nbsp;True&nbsp;to&nbsp;capture&nbsp;informational&nbsp;log&nbsp;statements</tt></dd></dl>
+
+<dl><dt><a name="OverthereSessionLogger-error"><strong>error</strong></a>(self, msg)</dt></dl>
+
+<dl><dt><a name="OverthereSessionLogger-info"><strong>info</strong></a>(self, msg)</dt></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -318,5 +401,25 @@ Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectio
 <dl><dt><strong>__weakref__</strong></dt>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="StringUtils">class <strong>StringUtils</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Static methods defined here:<br>
+<dl><dt><a name="StringUtils-concat"><strong>concat</strong></a>(sarray, delimiter<font color="#909090">='<font color="#c040c0">\n</font>'</font>)</dt><dd><tt>Creates&nbsp;a&nbsp;String&nbsp;by&nbsp;joining&nbsp;the&nbsp;String&nbsp;array&nbsp;using&nbsp;the&nbsp;delimiter.<br>
+:param&nbsp;sarray:&nbsp;strings&nbsp;to&nbsp;join<br>
+:param&nbsp;delimiter:&nbsp;to&nbsp;separate&nbsp;each&nbsp;string<br>
+:return:&nbsp;concatenated&nbsp;string</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
 </td></tr></table></td></tr></table>
-</body></html>

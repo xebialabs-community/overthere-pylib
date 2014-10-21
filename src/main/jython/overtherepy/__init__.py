@@ -7,15 +7,19 @@
 """
     Module to wrap the Overthere (https://github.com/xebialabs/overthere) library
 """
+import os
+import sys
 from com.xebialabs.overthere import CmdLine, ConnectionOptions, Overthere, OperatingSystemFamily
 from com.xebialabs.overthere.ssh import SshConnectionType
 from com.xebialabs.overthere.cifs import CifsConnectionType, WinrmHttpsCertificateTrustStrategy, WinrmHttpsHostnameVerificationStrategy
 from com.xebialabs.overthere.local import LocalFile
 from com.xebialabs.overthere.util import OverthereUtils, MultipleOverthereExecutionOutputHandler, CapturingOverthereExecutionOutputHandler, ConsoleOverthereExecutionOutputHandler
 from com.google.common.io import Resources
-from java.lang import Thread, Integer
+from java.lang import Thread, Integer, System
 import posixpath
 import time
+from com.xebialabs.deployit.plugin.otpylib import DirectoryDiff
+
 
 class LocalConnectionOptions(object):
     """Local connection settings"""
@@ -55,11 +59,13 @@ class LocalConnectionOptions(object):
         #TODO: Add winrs proxy support
         options.set(key, value)
 
+
 class RemoteConnectionOptions(LocalConnectionOptions):
     """Base class for remote connection options"""
     def __init__(self, protocol, **kwargs):
         self.connectionTimeoutMillis=1200000
         super(LocalConnectionOptions, self).__init__(protocol, **kwargs)
+
 
 class SshConnectionOptions(RemoteConnectionOptions):
     """SSH Connection options.  See https://github.com/xebialabs/overthere#ssh
@@ -112,6 +118,7 @@ class SshConnectionOptions(RemoteConnectionOptions):
         self.suPasswordPromptRegex = ".*[Pp]assword.*:"
         self.suOverrideUmask = True
         super(RemoteConnectionOptions, self).__init__("ssh", **kwargs)
+
 
 class CifsConnectionOptions(RemoteConnectionOptions):
     """CIFS Connection options.  See https://github.com/xebialabs/overthere#cifs
@@ -192,6 +199,7 @@ class OverthereHost(object):
         """
         return Overthere.getConnection(self._options.protocol, self._options.build())
 
+
 class CommandResponse(object):
     """Response from the execution of a remote os command"""
     def __init__(self, rc=-1, stdout=[], stderr=[]):
@@ -210,11 +218,90 @@ class CommandResponse(object):
         return self.__getattribute__(name)
 
 
+class OverthereSessionLogger(object):
+    """Simple class to log to console"""
+
+    def __init__(self, enabled=True, capture=False):
+        """
+        :param enabled: True to print informational log statements
+        :param capture: True to capture informational log statements
+        """
+        self._enabled = enabled
+        self._capture = capture
+        self.output_lines = []
+        self.error_lines = []
+
+    def info(self, msg):
+        if self._enabled:
+            print msg
+        if self._capture:
+            self.output_lines.append(msg)
+
+    def error(self, msg):
+        if self._enabled:
+            print >> sys.stderr, msg
+        if self._capture:
+            self.error_lines.append(msg)
+
+
+class Diff(object):
+    """
+    Contains the difference between two folders.
+    """
+    def __init__(self, old, new):
+        """
+        Constructor
+        :param old: com.xebialabs.overthere.OverthereFile folder with old content
+        :param new: com.xebialabs.overthere.OverthereFile folder with new content
+        """
+        self._old = old
+        self._old_path = old.path
+        self._new = new
+        self._new_path = new.path
+        self.added, self.removed, self.changed = ([], [], [])
+
+    @staticmethod
+    def calculate_diff(old, new):
+        """
+        Calculates the differences between two folders.
+        :return: Diff object with added, removed and changed attributes. Each contain a list of com.xebialabs.overthere.OverthereFile
+        """
+        dir_diff = DirectoryDiff(old, new).diff()
+        diff = Diff(old, new)
+        diff.added = dir_diff.added
+        diff.removed = dir_diff.removed
+        diff.changed = dir_diff.changed
+        return diff
+
+    def _strip_path_prefix(self, otfile, prefix):
+        rel_path = otfile.path[len(prefix) + 1:]
+        return rel_path.replace('\\', '/')
+
+    def strip_old_path_prefix(self, old_file):
+        return self._strip_path_prefix(old_file, self._old_path)
+
+    def strip_new_path_prefix(self, new_file):
+        return self._strip_path_prefix(new_file, self._new_path)
+
+
+class StringUtils(object):
+
+    @staticmethod
+    def concat(sarray, delimiter='\n'):
+        """
+        Creates a String by joining the String array using the delimiter.
+        :param sarray: strings to join
+        :param delimiter: to separate each string
+        :return: concatenated string
+        """
+
+
 class OverthereHostSession(object):
     """ Session with a target host """
-    def __init__(self, host, stream_command_output=False):
+    def __init__(self, host, enable_logging=True, stream_command_output=False):
         """
         :param host: to connect to. Can either be an OverthereHost or an XL Deploy's HostContainer class
+        :param enable_logging: Enables info logging to console.
         :param stream_command_output: True when remote command execution output is to be send to stdout and stderr
         """
         self.os = host.os
@@ -222,6 +309,14 @@ class OverthereHostSession(object):
         self._stream_command_output = stream_command_output
         self._conn = None
         self._work_dir = None
+        self.logger = OverthereSessionLogger(enable_logging)
+
+    def __enter__(self):
+        self.work_dir()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.close_conn()
 
     def is_windows(self):
         """
@@ -269,13 +364,13 @@ class OverthereHostSession(object):
         """
         return self.get_conn().getFile(filepath)
 
-    def local_file(self, filepath):
+    def local_file(self, file):
         """
-        Get reference to local file
-        :param filepath: absolute path on local system
+        Get reference to local file as an OverthereFile
+        :param file: java.util.File
         :return: com.xebialabs.overthere.OverthereFile
         """
-        return LocalFile.valueOf(filepath)
+        return LocalFile.valueOf(file)
 
     def read_file(self, filepath, encoding="UTF-8"):
         """
@@ -298,13 +393,131 @@ class OverthereHostSession(object):
         """
         return self.read_file(filepath, encoding).split(self.os.lineSeparator)
 
-    def copy_to(self, source_otfile, target_otfile):
+    def copy_diff(self, target_path, diff):
+        """
+        Apply the changes represented by the Diff object to the target path.
+        :param target_path: absolute path to folder on target system
+        :param diff: Diff containing all changes to be applied to target path
+        """
+        target = self.remote_file(target_path)
+        if not target.exists():
+            self.logger.info("Creating path " + target.path)
+            target.mkdirs()
+        self.logger.info(str(len(diff.removed)) + " files to be removed.")
+        self.logger.info(str(len(diff.added)) + " new files to be copied.")
+        self.logger.info(str(len(diff.changed)) + " modified files to be copied.")
+
+        if len(diff.removed) > 0:
+            self.logger.info("Start removal of files...")
+            for f in diff.removed:
+                remove_file = target.getFile(diff.strip_old_path_prefix(f))
+                file_type = "directory" if f.isDirectory() else "file"
+                if remove_file.exists():
+                    self.logger.info("Removing %s %s" % (file_type, remove_file.path))
+                    remove_file.deleteRecursively()
+                else:
+                    self.logger.info("File %s does not exist. Ignoring." % remove_file.path)
+            self.logger.info("Removal of files done.")
+
+        if len(diff.added) > 0:
+            self.logger.info("Start copying of new files...")
+            for f in diff.added:
+                add_file = target.getFile(diff.strip_new_path_prefix(f))
+                file_type = "file"
+                if f.isDirectory():
+                    file_type = "directory"
+                    add_file.mkdirs()
+                else:
+                    parent_dir = add_file.parentFile
+                    if not parent_dir.exists():
+                        parent_dir.mkdirs()
+                self.logger.info("Copying %s %s" % (file_type, add_file.path))
+                f.copyTo(add_file)
+            self.logger.info("Copying of new files done.")
+
+        if len(diff.changed) > 0:
+            self.logger.info("Start copying of modified files...")
+            for f in diff.changed:
+                changed_file = target.getFile(diff.strip_new_path_prefix(f))
+                self.logger.info("Updating file %s" % changed_file.path)
+                f.copyTo(changed_file)
+            self.logger.info("Copying of modified files done.")
+
+    def copy_to(self, source, target, mkdirs=True):
         """
         Copy the source file to the target file
-        :param source_otfile: com.xebialabs.overthere.OverthereFile
-        :param target_otfile: com.xebialabs.overthere.OverthereFile
+        :param source: com.xebialabs.overthere.OverthereFile
+        :param target: com.xebialabs.overthere.OverthereFile
+        :param mkdirs: Automatically create target directory
+        :return:
         """
-        source_otfile.copyTo(target_otfile)
+        if mkdirs and not target.exists():
+            if source.isDirectory():
+                self.logger.info("Creating path " + target.path)
+                target.mkdirs()
+            else:
+                parent = target.parentFile
+                self.logger.info("Creating path " + parent.path)
+                parent.mkdirs()
+
+        self.logger.info("Copying %s to %s" %(source.path, target.path))
+        source.copyTo(target)
+
+    def delete_from(self, source, target, target_dir_shared=False):
+        """
+        Uses the source directory to determine the files to delete from the target directory.
+        Only the immediate sub-directories and files in the source directory base are used.
+        If the target is a file, then it is deleted without analysing the source.
+        When there are files present in the target directory after deleting source files from it, the target is not deleted.
+        :param source: directory of files to be deleted.
+        :param target: directory or file to be deleted.
+        :param target_dir_shared: When True, the target directory itself will not be deleted.
+        :return:
+        """
+        if not target.exists():
+            self.logger.info("Target [%s] does not exist. No deletion to be performed" % target.path)
+            return
+
+        if not target.isDirectory():
+            self.logger.info("Deleting [%s]" % target.path)
+            target.delete()
+            return
+
+        assert source.isDirectory(), "Source [%s] is not a directory"
+
+        remove_basedir = True
+        for f in target.listFiles():
+            if source.getFile(f.getName()).exists():
+                if f.isDirectory():
+                    self.logger.info("Recursively deleting directory [%s]" % f.path)
+                    f.deleteRecursively()
+                else:
+                    self.logger.info("Deleting file [%s]" % f.path)
+                    f.delete()
+            else:
+                remove_basedir = False
+
+        if remove_basedir:
+            if target_dir_shared:
+                self.logger.info("Target directory [%s] is shared. Will not delete" % target.path)
+            else:
+                self.logger.info("Deleting directory [%s]" % target.path)
+                target.delete()
+        elif not target_dir_shared and not remove_basedir:
+            self.logger.info("Target directory [%s] is not shared, but still has content from an external source. Will not delete" % target.path)
+
+    def copy_text_to_file(self, content, target, mkdirs=True):
+        """
+        Copies the content to the specified file
+        :param content: to write to file
+        :param target: com.xebialabs.overthere.OverthereFile
+        :param mkdirs: Automatically create target directory
+        """
+        parent = target.parentFile
+        if mkdirs and not parent.exists():
+            self.logger.info("Creating path " + parent.path)
+            parent.mkdirs()
+        OverthereUtils.write(str(content), target)
 
     def upload_text_content_to_work_dir(self, content, filename, executable=False):
         """
@@ -317,7 +530,7 @@ class OverthereHostSession(object):
         target = self.work_dir_file(filename)
         if executable:
             target.setExecutable(executable)
-        OverthereUtils.write(str(content), target)
+        self.copy_text_to_file(str(content), target)
         return target
 
     def upload_classpath_resource_to_work_dir(self, resource, executable=False):
@@ -354,10 +567,11 @@ class OverthereHostSession(object):
             target.setExecutable(executable)
         return target
 
-    def execute(self, cmd):
+    def execute(self, cmd, check_success=True):
         """
         Executes the command on the remote system and returns the result
         :param cmd: Command line as an Array of Strings
+        :param check_success: checks the return code is 0. On failure the output is printed to stdout and a system exit is performed
         :return: CommandResponse
         """
         cmdline = CmdLine.build(cmd)
@@ -377,4 +591,11 @@ class OverthereHostSession(object):
         #wait for output to drain
         time.sleep(1)
 
-        return CommandResponse(rc=rc, stdout=capture_so_handler.outputLines, stderr=capture_se_handler.outputLines)
+        response = CommandResponse(rc=rc, stdout=capture_so_handler.outputLines, stderr=capture_se_handler.outputLines)
+
+        if response.rc != 0 and check_success:
+            self.logger.error(StringUtils.concat(response.stdout))
+            self.logger.error(StringUtils.concat(response.stderr))
+            sys.exit(response.rc)
+
+        return response
