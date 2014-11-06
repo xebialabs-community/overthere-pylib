@@ -57,7 +57,7 @@ session.close_conn()
 The session supports the 'with' statement.  You must first import the statement from the `___futures___` package. The session's connection is automatically closed at the end of the 'with' body.
 
 <pre>
-from __futures__ import with
+from __future__ import with_statement
 ...
 with session:
 	# do stuff

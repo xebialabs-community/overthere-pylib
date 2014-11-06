@@ -18,7 +18,7 @@ from com.google.common.io import Resources
 from java.lang import Thread, Integer, System
 import posixpath
 import time
-from com.xebialabs.deployit.plugin.otpylib import DirectoryDiff
+from com.xebialabs.deployit.plugin.otpylib import DirectoryDiff, PyLogger, PyLoggerExecutionOutputHandler
 
 
 class LocalConnectionOptions(object):
@@ -218,10 +218,10 @@ class CommandResponse(object):
         return self.__getattribute__(name)
 
 
-class OverthereSessionLogger(object):
+class OverthereSessionLogger(PyLogger):
     """Simple class to log to console"""
 
-    def __init__(self, enabled=True, capture=False):
+    def __init__(self, enabled=True, capture=False, exec_ctx=None):
         """
         :param enabled: True to print informational log statements
         :param capture: True to capture informational log statements
@@ -230,16 +230,23 @@ class OverthereSessionLogger(object):
         self._capture = capture
         self.output_lines = []
         self.error_lines = []
+        self._exec_ctx = exec_ctx
 
     def info(self, msg):
         if self._enabled:
-            print msg
+            if self._exec_ctx is not None:
+                self._exec_ctx.logOutput(msg)
+            else:
+                print msg
         if self._capture:
             self.output_lines.append(msg)
 
     def error(self, msg):
         if self._enabled:
-            print >> sys.stderr, msg
+            if self._exec_ctx is not None:
+                self._exec_ctx.logError(msg)
+            else:
+                print >> sys.stderr, msg
         if self._capture:
             self.error_lines.append(msg)
 
@@ -294,14 +301,93 @@ class StringUtils(object):
         :param delimiter: to separate each string
         :return: concatenated string
         """
+        return delimiter.join(sarray)
+
+    @staticmethod
+    def contains(s, item):
+        """
+        Checks if string contains the sub-string
+        :param s: to check
+        :param item:  that should be contained in s
+        :return:  True if exists
+        """
+        return item in s
+
+    @staticmethod
+    def empty(s):
+        """
+        Checks if a string is None or stripped lenght is 0
+        :param s: string to check
+        :return: True if empty
+        """
+        return s is None or len(s.strip()) == 0
+
+    @staticmethod
+    def notEmpty(s):
+        """
+        Checks if a string is not empty
+        :param s: string to check
+        :return: True if not empty
+        """
+        return not StringUtils.empty(s)
+
+
+class BashScriptBuilder(object):
+    """ Utility class to help generate sh scripts """
+
+    def __init__(self):
+        self._lines = ["#!/bin/sh"]
+
+    def build(self):
+        return "\n".join(self._lines)
+
+    def add_line(self, line, check_rc=False):
+        self._lines.append(line)
+        if check_rc:
+            self.add_rc_check()
+        return self
+
+    def add_rc_check(self):
+        self._lines.extend(["res=$?", "if [ $res != 0 ] ; then", "exit $res", "fi"])
+        return self
+
+    def add_lines(self, lines):
+        self._lines.extend(lines)
+        return self
+
+
+class BatchScriptBuilder(object):
+    """ Utility class to help generate batch scripts """
+
+    def __init__(self):
+        self._lines = ["@echo off", "setlocal"]
+
+    def build(self):
+        self.add_line("endlocal")
+        return "\r\n".join(self._lines)
+
+    def add_line(self, line, check_rc=False):
+        self._lines.append(line)
+        if check_rc:
+            self.add_rc_check()
+        return self
+
+    def add_lines(self, lines):
+        self._lines.extend(lines)
+        return self
+
+    def add_rc_check(self):
+        self._lines.extend(["set RES=%ERRORLEVEL%", "if not %RES% == 0 (", " exit %RES%", ")"])
+        return self
 
 
 class OverthereHostSession(object):
     """ Session with a target host """
-    def __init__(self, host, enable_logging=True, stream_command_output=False):
+    def __init__(self, host, enable_logging=True, stream_command_output=False, execution_context=None):
         """
         :param host: to connect to. Can either be an OverthereHost or an XL Deploy's HostContainer class
         :param enable_logging: Enables info logging to console.
+        :param execution_context: XLD ExecutionContext. Can be None.
         :param stream_command_output: True when remote command execution output is to be send to stdout and stderr
         """
         self.os = host.os
@@ -309,7 +395,7 @@ class OverthereHostSession(object):
         self._stream_command_output = stream_command_output
         self._conn = None
         self._work_dir = None
-        self.logger = OverthereSessionLogger(enable_logging)
+        self.logger = OverthereSessionLogger(enabled=enable_logging, exec_ctx=execution_context)
 
     def __enter__(self):
         self.work_dir()
@@ -344,7 +430,7 @@ class OverthereHostSession(object):
         :return: com.xebialabs.overthere.OverthereFile
         """
         if self._work_dir is None:
-            self._work_dir = self.get_conn().getTempFile("remote_plugin", ".tmp")
+            self._work_dir = self.get_conn().getTempFile("otpylib_plugin", ".tmp")
             self._work_dir.mkdir()
         return self._work_dir
 
@@ -528,9 +614,9 @@ class OverthereHostSession(object):
         :return: com.xebialabs.overthere.OverthereFile
         """
         target = self.work_dir_file(filename)
+        self.copy_text_to_file(str(content), target)
         if executable:
             target.setExecutable(executable)
-        self.copy_text_to_file(str(content), target)
         return target
 
     def upload_classpath_resource_to_work_dir(self, resource, executable=False):
@@ -567,25 +653,28 @@ class OverthereHostSession(object):
             target.setExecutable(executable)
         return target
 
-    def execute(self, cmd, check_success=True):
+    def execute(self, cmd, check_success=True, suppress_streaming_output=False):
         """
         Executes the command on the remote system and returns the result
-        :param cmd: Command line as an Array of Strings
+        :param cmd: Command line as an Array of Strings or String.  A String is split by space.
         :param check_success: checks the return code is 0. On failure the output is printed to stdout and a system exit is performed
         :return: CommandResponse
         """
+        if isinstance(cmd, basestring):
+            cmd = cmd.split()
+
         cmdline = CmdLine.build(cmd)
         capture_so_handler = CapturingOverthereExecutionOutputHandler.capturingHandler()
         capture_se_handler = CapturingOverthereExecutionOutputHandler.capturingHandler()
 
-        if not self._stream_command_output:
-            so_handler = capture_so_handler
-            se_handler = capture_se_handler
-        else:
-            console_so_handler = ConsoleOverthereExecutionOutputHandler.sysoutHandler()
-            console_se_hanlder = ConsoleOverthereExecutionOutputHandler.syserrHandler()
+        if self._stream_command_output and not suppress_streaming_output:
+            console_so_handler = PyLoggerExecutionOutputHandler.sysoutHandler(self.logger)
+            console_se_hanlder = PyLoggerExecutionOutputHandler.syserrHandler(self.logger)
             so_handler = MultipleOverthereExecutionOutputHandler.multiHandler([capture_so_handler, console_so_handler])
             se_handler = MultipleOverthereExecutionOutputHandler.multiHandler([capture_se_handler, console_se_hanlder])
+        else:
+            so_handler = capture_so_handler
+            se_handler = capture_se_handler
 
         rc = self.get_conn().execute(so_handler, se_handler, cmdline)
         #wait for output to drain
@@ -594,8 +683,9 @@ class OverthereHostSession(object):
         response = CommandResponse(rc=rc, stdout=capture_so_handler.outputLines, stderr=capture_se_handler.outputLines)
 
         if response.rc != 0 and check_success:
-            self.logger.error(StringUtils.concat(response.stdout))
-            self.logger.error(StringUtils.concat(response.stderr))
+            if not self._stream_command_output and suppress_streaming_output:
+                self.logger.error(StringUtils.concat(response.stdout))
+                self.logger.error(StringUtils.concat(response.stderr))
             sys.exit(response.rc)
 
         return response

@@ -50,6 +50,11 @@ class TestOverthereSession(object):
         text = self._session.read_file(f.path)
         eq_("some text", text)
 
+    def test_upload_executable_file(self):
+        f = self._session.upload_text_content_to_work_dir("#!/bin/sh\necho hello", "my.sh", executable=True)
+        r = self._session.execute(f.path)
+        self.assert_in_list(r.stdout, "hello")
+
     def test_upload_classpath_resource(self):
         f = self._session.upload_classpath_resource_to_work_dir("testfiles/singleline.txt")
         text = self._session.read_file(f.path)
@@ -78,7 +83,7 @@ class TestOverthereSession(object):
 
     def test_execute_check_success_turned_off(self):
         f = self._session.upload_classpath_resource_to_work_dir("testfiles/echo.sh", executable=True)
-        response = self._session.execute([f.path, "ping", "1"], check_success=False)
+        response = self._session.execute("%s ping 1" % f.path, check_success=False)
         eq_(response.rc, 1)
         eq_(response['stdout'][0], "Hi ping")
         eq_(response['stdout'][1], "Exiting with 1")
@@ -219,6 +224,25 @@ class TestOverthereSession(object):
         self.assert_in_list(log_info, "Updating file %s/changedfile.txt" % deployed_old.path)
         self.assert_in_list(log_info, "Updating file %s/subdirboth/changedfile.txt" % deployed_old.path)
         self.assert_in_list(log_info, "Copying of modified files done.")
+
+    def test_execution_ctx_logging(self):
+        class ExecutionContext(object):
+            def __init__(self):
+                self.output_success = False
+                self.error_success = False
+            def logOutput(self, msg):
+                self.output_success = True
+            def logError(self, msg):
+                self.error_success = True
+        exec_ctx = ExecutionContext()
+        session = OverthereHostSession(self._linuxhost, execution_context=exec_ctx)
+        session.logger.info("Check")
+        eq_(exec_ctx.output_success, True)
+        session.logger.error("Check")
+        eq_(exec_ctx.error_success, True)
+
+
+
 
 
 
