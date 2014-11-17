@@ -667,6 +667,7 @@ class OverthereHostSession(object):
         Executes the command on the remote system and returns the result
         :param cmd: Command line as an Array of Strings or String.  A String is split by space.
         :param check_success: checks the return code is 0. On failure the output is printed to stdout and a system exit is performed
+        :param suppress_streaming_output:  suppresses the output of the execution when the session is in streaming mode.
         :return: CommandResponse
         """
         if isinstance(cmd, basestring):
@@ -678,9 +679,9 @@ class OverthereHostSession(object):
 
         if self._stream_command_output and not suppress_streaming_output:
             console_so_handler = PyLoggerExecutionOutputHandler.sysoutHandler(self.logger)
-            console_se_hanlder = PyLoggerExecutionOutputHandler.syserrHandler(self.logger)
+            console_se_handler = PyLoggerExecutionOutputHandler.syserrHandler(self.logger)
             so_handler = MultipleOverthereExecutionOutputHandler.multiHandler([capture_so_handler, console_so_handler])
-            se_handler = MultipleOverthereExecutionOutputHandler.multiHandler([capture_se_handler, console_se_hanlder])
+            se_handler = MultipleOverthereExecutionOutputHandler.multiHandler([capture_se_handler, console_se_handler])
         else:
             so_handler = capture_so_handler
             se_handler = capture_se_handler
