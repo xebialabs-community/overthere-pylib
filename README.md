@@ -1,7 +1,7 @@
 #overthere-pylib
 ===============
 
-Python wrapper for [Overthere](http://https://github.com/xebialabs/overthere) remoting library
+Jython wrapper for [Overthere](http://https://github.com/xebialabs/overthere) remoting library
 
 ## Basic Usage
 
@@ -54,7 +54,7 @@ session.close_conn()
 
 ### Sample session using 'with'
 
-The session supports the 'with' statement.  You must first import the statement from the `___futures___` package. The session's connection is automatically closed at the end of the 'with' body.
+The session supports the 'with' statement.  You must first import the statement from the `___future___` package. The session's connection is automatically closed at the end of the 'with' body.
 
 <pre>
 from __future__ import with_statement
@@ -81,8 +81,9 @@ Below is a description of the main _OverthereHostSession_ class.
 
 <dl><dt><a name="OverthereHostSession-__exit__"><strong>__exit__</strong></a>(self, type, value, traceback)</dt></dl>
 
-<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, enable_logging<font color="#909090">=True</font>, stream_command_output<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
+<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, enable_logging<font color="#909090">=True</font>, stream_command_output<font color="#909090">=False</font>, execution_context<font color="#909090">=None</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
 :param&nbsp;enable_logging:&nbsp;Enables&nbsp;info&nbsp;logging&nbsp;to&nbsp;console.<br>
+:param&nbsp;execution_context:&nbsp;XLD&nbsp;ExecutionContext.&nbsp;Can&nbsp;be&nbsp;None.<br>
 :param&nbsp;stream_command_output:&nbsp;True&nbsp;when&nbsp;remote&nbsp;command&nbsp;execution&nbsp;output&nbsp;is&nbsp;to&nbsp;be&nbsp;send&nbsp;to&nbsp;stdout&nbsp;and&nbsp;stderr</tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-close_conn"><strong>close_conn</strong></a>(self)</dt><dd><tt>Close&nbsp;connection&nbsp;to&nbsp;target&nbsp;host</tt></dd></dl>
@@ -111,8 +112,8 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 :param&nbsp;target_dir_shared:&nbsp;When&nbsp;True,&nbsp;the&nbsp;target&nbsp;directory&nbsp;itself&nbsp;will&nbsp;not&nbsp;be&nbsp;deleted.<br>
 :return:</tt></dd></dl>
 
-<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
-:param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings<br>
+<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>, suppress_streaming_output<font color="#909090">=False</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
+:param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings&nbsp;or&nbsp;String.&nbsp;&nbsp;A&nbsp;String&nbsp;is&nbsp;split&nbsp;by&nbsp;space.<br>
 :param&nbsp;check_success:&nbsp;checks&nbsp;the&nbsp;return&nbsp;code&nbsp;is&nbsp;0.&nbsp;On&nbsp;failure&nbsp;the&nbsp;output&nbsp;is&nbsp;printed&nbsp;to&nbsp;stdout&nbsp;and&nbsp;a&nbsp;system&nbsp;exit&nbsp;is&nbsp;performed<br>
 :return:&nbsp;<a href="#CommandResponse">CommandResponse</a></tt></dd></dl>
 
@@ -162,4 +163,4 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 :param&nbsp;filepath:&nbsp;relative&nbsp;path&nbsp;to&nbsp;working&nbsp;directory<br>
 :return:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
 
-</td></tr></table> 
+</td></tr></table>  

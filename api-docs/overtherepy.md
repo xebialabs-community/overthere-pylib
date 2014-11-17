@@ -1,4 +1,3 @@
-
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
@@ -10,24 +9,25 @@
 <dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="#CommandResponse">CommandResponse</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#Diff">Diff</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#LocalConnectionOptions">LocalConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="overtherepy.html#BashScriptBuilder">BashScriptBuilder</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#BatchScriptBuilder">BatchScriptBuilder</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#CommandResponse">CommandResponse</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#Diff">Diff</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="#CifsConnectionOptions">CifsConnectionOptions</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#SshConnectionOptions">SshConnectionOptions</a>
+<dt><font face="helvetica, arial"><a href="overtherepy.html#CifsConnectionOptions">CifsConnectionOptions</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#SshConnectionOptions">SshConnectionOptions</a>
 </font></dt></dl>
 </dd>
 </dl>
 </dd>
-<dt><font face="helvetica, arial"><a href="#OverthereHost">OverthereHost</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#OverthereHostSession">OverthereHostSession</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#OverthereSessionLogger">OverthereSessionLogger</a>
-</font></dt><dt><font face="helvetica, arial"><a href="#StringUtils">StringUtils</a>
+<dt><font face="helvetica, arial"><a href="overtherepy.html#OverthereHost">OverthereHost</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#OverthereHostSession">OverthereHostSession</a>
+</font></dt><dt><font face="helvetica, arial"><a href="overtherepy.html#StringUtils">StringUtils</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -35,7 +35,48 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="CifsConnectionOptions">class <strong>CifsConnectionOptions</strong></a>(<a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="BashScriptBuilder">class <strong>BashScriptBuilder</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Utility&nbsp;class&nbsp;to&nbsp;help&nbsp;generate&nbsp;sh&nbsp;scripts<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BashScriptBuilder-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="BashScriptBuilder-add_line"><strong>add_line</strong></a>(self, line, check_rc<font color="#909090">=False</font>)</dt></dl>
+
+<dl><dt><a name="BashScriptBuilder-add_lines"><strong>add_lines</strong></a>(self, lines)</dt></dl>
+
+<dl><dt><a name="BashScriptBuilder-add_rc_check"><strong>add_rc_check</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="BashScriptBuilder-build"><strong>build</strong></a>(self)</dt></dl>
+
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BatchScriptBuilder">class <strong>BatchScriptBuilder</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Utility&nbsp;class&nbsp;to&nbsp;help&nbsp;generate&nbsp;batch&nbsp;scripts<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BatchScriptBuilder-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="BatchScriptBuilder-add_line"><strong>add_line</strong></a>(self, line, check_rc<font color="#909090">=False</font>)</dt></dl>
+
+<dl><dt><a name="BatchScriptBuilder-add_lines"><strong>add_lines</strong></a>(self, lines)</dt></dl>
+
+<dl><dt><a name="BatchScriptBuilder-add_rc_check"><strong>add_rc_check</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="BatchScriptBuilder-build"><strong>build</strong></a>(self)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CifsConnectionOptions">class <strong>CifsConnectionOptions</strong></a>(<a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>CIFS&nbsp;Connection&nbsp;options.&nbsp;&nbsp;See&nbsp;https://github.com/xebialabs/overthere#cifs<br>
@@ -60,9 +101,9 @@ winrsNoprofile&nbsp;=&nbsp;False<br>
 winrsUnencrypted&nbsp;=&nbsp;False<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="#CifsConnectionOptions">CifsConnectionOptions</a></dd>
-<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#CifsConnectionOptions">CifsConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -73,11 +114,11 @@ Methods defined here:<br>
 :param&nbsp;kwargs:&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh&nbsp;for&nbsp;options</tt></dd></dl>
 
 <hr>
-Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="CifsConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -102,14 +143,6 @@ Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectio
 :param&nbsp;stderr:&nbsp;Array&nbsp;containing&nbsp;the&nbsp;standard&nbsp;output&nbsp;from&nbsp;the&nbsp;executed&nbsp;remote&nbsp;command<br>
 :return:</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -133,14 +166,10 @@ Static methods defined here:<br>
 <dl><dt><a name="Diff-calculate_diff"><strong>calculate_diff</strong></a>(old, new)</dt><dd><tt>Calculates&nbsp;the&nbsp;differences&nbsp;between&nbsp;two&nbsp;folders.<br>
 :return:&nbsp;<a href="#Diff">Diff</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;added,&nbsp;removed&nbsp;and&nbsp;changed&nbsp;attributes.&nbsp;Each&nbsp;contain&nbsp;a&nbsp;list&nbsp;of&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
+<dl><dt><a name="Diff-md5"><strong>md5</strong></a>(otfile)</dt><dd><tt>Calculates&nbsp;the&nbsp;md5&nbsp;checksum&nbsp;for&nbsp;the&nbsp;give&nbsp;overthere&nbsp;file<br>
+:param&nbsp;otfile:&nbsp;com.xebialabs.overthere.OverthereFile<br>
+:return:&nbsp;md5&nbsp;checksum</tt></dd></dl>
+
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -157,14 +186,6 @@ Data descriptors defined here:<br>
 
 <dl><dt><a name="LocalConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -181,14 +202,6 @@ Data descriptors defined here:<br>
 
 <dl><dt><a name="OverthereHost-getConnection"><strong>getConnection</strong></a>(self)</dt><dd><tt>:return:&nbsp;a&nbsp;new&nbsp;com.xebialabs.overthere.OverthereConnection</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -203,8 +216,9 @@ Data descriptors defined here:<br>
 
 <dl><dt><a name="OverthereHostSession-__exit__"><strong>__exit__</strong></a>(self, type, value, traceback)</dt></dl>
 
-<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, enable_logging<font color="#909090">=True</font>, stream_command_output<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
+<dl><dt><a name="OverthereHostSession-__init__"><strong>__init__</strong></a>(self, host, enable_logging<font color="#909090">=True</font>, stream_command_output<font color="#909090">=False</font>, execution_context<font color="#909090">=None</font>)</dt><dd><tt>:param&nbsp;host:&nbsp;to&nbsp;connect&nbsp;to.&nbsp;Can&nbsp;either&nbsp;be&nbsp;an&nbsp;<a href="#OverthereHost">OverthereHost</a>&nbsp;or&nbsp;an&nbsp;XL&nbsp;Deploy's&nbsp;HostContainer&nbsp;class<br>
 :param&nbsp;enable_logging:&nbsp;Enables&nbsp;info&nbsp;logging&nbsp;to&nbsp;console.<br>
+:param&nbsp;execution_context:&nbsp;XLD&nbsp;ExecutionContext.&nbsp;Can&nbsp;be&nbsp;None.<br>
 :param&nbsp;stream_command_output:&nbsp;True&nbsp;when&nbsp;remote&nbsp;command&nbsp;execution&nbsp;output&nbsp;is&nbsp;to&nbsp;be&nbsp;send&nbsp;to&nbsp;stdout&nbsp;and&nbsp;stderr</tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-close_conn"><strong>close_conn</strong></a>(self)</dt><dd><tt>Close&nbsp;connection&nbsp;to&nbsp;target&nbsp;host</tt></dd></dl>
@@ -233,8 +247,8 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 :param&nbsp;target_dir_shared:&nbsp;When&nbsp;True,&nbsp;the&nbsp;target&nbsp;directory&nbsp;itself&nbsp;will&nbsp;not&nbsp;be&nbsp;deleted.<br>
 :return:</tt></dd></dl>
 
-<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
-:param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings<br>
+<dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>, suppress_streaming_output<font color="#909090">=False</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
+:param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings&nbsp;or&nbsp;String.&nbsp;&nbsp;A&nbsp;String&nbsp;is&nbsp;split&nbsp;by&nbsp;space.<br>
 :param&nbsp;check_success:&nbsp;checks&nbsp;the&nbsp;return&nbsp;code&nbsp;is&nbsp;0.&nbsp;On&nbsp;failure&nbsp;the&nbsp;output&nbsp;is&nbsp;printed&nbsp;to&nbsp;stdout&nbsp;and&nbsp;a&nbsp;system&nbsp;exit&nbsp;is&nbsp;performed<br>
 :return:&nbsp;<a href="#CommandResponse">CommandResponse</a></tt></dd></dl>
 
@@ -284,40 +298,7 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 :param&nbsp;filepath:&nbsp;relative&nbsp;path&nbsp;to&nbsp;working&nbsp;directory<br>
 :return:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="OverthereSessionLogger">class <strong>OverthereSessionLogger</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Simple&nbsp;class&nbsp;to&nbsp;log&nbsp;to&nbsp;console<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Methods defined here:<br>
-<dl><dt><a name="OverthereSessionLogger-__init__"><strong>__init__</strong></a>(self, enabled<font color="#909090">=True</font>, capture<font color="#909090">=False</font>)</dt><dd><tt>:param&nbsp;enabled:&nbsp;True&nbsp;to&nbsp;print&nbsp;informational&nbsp;log&nbsp;statements<br>
-:param&nbsp;capture:&nbsp;True&nbsp;to&nbsp;capture&nbsp;informational&nbsp;log&nbsp;statements</tt></dd></dl>
-
-<dl><dt><a name="OverthereSessionLogger-error"><strong>error</strong></a>(self, msg)</dt></dl>
-
-<dl><dt><a name="OverthereSessionLogger-info"><strong>info</strong></a>(self, msg)</dt></dl>
-
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
+</td></tr></table> <strong>OverthereSessionLogger</strong> = &lt;class 'overtherepy.OverthereSessionLogger'&gt; <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -327,8 +308,8 @@ Data descriptors defined here:<br>
 <td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;remote&nbsp;connection&nbsp;options<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -336,11 +317,11 @@ Methods defined here:<br>
 <dl><dt><a name="RemoteConnectionOptions-__init__"><strong>__init__</strong></a>(self, protocol, **kwargs)</dt></dl>
 
 <hr>
-Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="RemoteConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -351,7 +332,7 @@ Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectio
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="SshConnectionOptions">class <strong>SshConnectionOptions</strong></a>(<a href="#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="SshConnectionOptions">class <strong>SshConnectionOptions</strong></a>(<a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>SSH&nbsp;Connection&nbsp;options.&nbsp;&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh<br>
@@ -377,9 +358,9 @@ suPasswordPromptRegex&nbsp;=&nbsp;".*[Pp]assword.*:"<br>
 suOverrideUmask&nbsp;=&nbsp;True<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="#SshConnectionOptions">SshConnectionOptions</a></dd>
-<dd><a href="#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
-<dd><a href="#LocalConnectionOptions">LocalConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#SshConnectionOptions">SshConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#RemoteConnectionOptions">RemoteConnectionOptions</a></dd>
+<dd><a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
@@ -390,11 +371,11 @@ Methods defined here:<br>
 :param&nbsp;kwargs:&nbsp;See&nbsp;https://github.com/xebialabs/overthere#ssh&nbsp;for&nbsp;options</tt></dd></dl>
 
 <hr>
-Methods inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Methods inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><a name="SshConnectionOptions-build"><strong>build</strong></a>(self)</dt><dd><tt>:return:&nbsp;com.xebialabs.overthere.ConnectionOptions</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
+Data descriptors inherited from <a href="overtherepy.html#LocalConnectionOptions">LocalConnectionOptions</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -414,12 +395,17 @@ Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectio
 :param&nbsp;delimiter:&nbsp;to&nbsp;separate&nbsp;each&nbsp;string<br>
 :return:&nbsp;concatenated&nbsp;string</tt></dd></dl>
 
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table></td></tr></table>
+<dl><dt><a name="StringUtils-contains"><strong>contains</strong></a>(s, item)</dt><dd><tt>Checks&nbsp;if&nbsp;string&nbsp;contains&nbsp;the&nbsp;sub-string<br>
+:param&nbsp;s:&nbsp;to&nbsp;check<br>
+:param&nbsp;item:&nbsp;&nbsp;that&nbsp;should&nbsp;be&nbsp;contained&nbsp;in&nbsp;s<br>
+:return:&nbsp;&nbsp;True&nbsp;if&nbsp;exists</tt></dd></dl>
+
+<dl><dt><a name="StringUtils-empty"><strong>empty</strong></a>(s)</dt><dd><tt>Checks&nbsp;if&nbsp;a&nbsp;string&nbsp;is&nbsp;None&nbsp;or&nbsp;stripped&nbsp;lenght&nbsp;is&nbsp;0<br>
+:param&nbsp;s:&nbsp;string&nbsp;to&nbsp;check<br>
+:return:&nbsp;True&nbsp;if&nbsp;empty</tt></dd></dl>
+
+<dl><dt><a name="StringUtils-notEmpty"><strong>notEmpty</strong></a>(s)</dt><dd><tt>Checks&nbsp;if&nbsp;a&nbsp;string&nbsp;is&nbsp;not&nbsp;empty<br>
+:param&nbsp;s:&nbsp;string&nbsp;to&nbsp;check<br>
+:return:&nbsp;True&nbsp;if&nbsp;not&nbsp;empty</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>

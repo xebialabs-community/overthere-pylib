@@ -13,9 +13,9 @@ from com.xebialabs.overthere import CmdLine, ConnectionOptions, Overthere, Opera
 from com.xebialabs.overthere.ssh import SshConnectionType
 from com.xebialabs.overthere.cifs import CifsConnectionType, WinrmHttpsCertificateTrustStrategy, WinrmHttpsHostnameVerificationStrategy
 from com.xebialabs.overthere.local import LocalFile
-from com.xebialabs.overthere.util import OverthereUtils, MultipleOverthereExecutionOutputHandler, CapturingOverthereExecutionOutputHandler, ConsoleOverthereExecutionOutputHandler
+from com.xebialabs.overthere.util import OverthereUtils, MultipleOverthereExecutionOutputHandler, CapturingOverthereExecutionOutputHandler
 from com.google.common.io import Resources
-from java.lang import Thread, Integer, System
+from java.lang import Thread, Integer
 import posixpath
 import time
 from com.xebialabs.deployit.plugin.otpylib import DirectoryDiff, PyLogger, PyLoggerExecutionOutputHandler
@@ -266,6 +266,15 @@ class Diff(object):
         self._new = new
         self._new_path = new.path
         self.added, self.removed, self.changed = ([], [], [])
+
+    @staticmethod
+    def md5(otfile):
+        """
+        Calculates the md5 checksum for the give overthere file
+        :param otfile: com.xebialabs.overthere.OverthereFile
+        :return: md5 checksum
+        """
+        return DirectoryDiff.md5(otfile)
 
     @staticmethod
     def calculate_diff(old, new):
