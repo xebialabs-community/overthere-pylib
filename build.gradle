@@ -16,7 +16,7 @@ apply plugin: 'idea'
 group = 'com.xebialabs.deployit.community'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-version = '0.0.2'
+version = '0.0.3-SNAPSHOT'
 
 repositories {
     mavenLocal()

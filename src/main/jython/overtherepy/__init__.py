@@ -364,6 +364,10 @@ class BashScriptBuilder(object):
         self._lines.extend(lines)
         return self
 
+    def set_env_var(self, k, v):
+        self._lines.append('%s="%s"' % (k, v))
+        self._lines.append("export %s" % k)
+
 
 class BatchScriptBuilder(object):
     """ Utility class to help generate batch scripts """
@@ -388,6 +392,9 @@ class BatchScriptBuilder(object):
     def add_rc_check(self):
         self._lines.extend(["set RES=%ERRORLEVEL%", "if not %RES% == 0 (", " exit %RES%", ")"])
         return self
+
+    def set_env_var(self, k, v):
+        self._lines.append("set %s=%s" % (k, v))
 
 
 class OverthereHostSession(object):
