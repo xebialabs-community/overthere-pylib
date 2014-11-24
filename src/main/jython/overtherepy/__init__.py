@@ -559,8 +559,9 @@ class OverthereHostSession(object):
                 target.mkdirs()
             else:
                 parent = target.parentFile
-                self.logger.info("Creating path " + parent.path)
-                parent.mkdirs()
+                if not parent.exists():
+                    self.logger.info("Creating path " + parent.path)
+                    parent.mkdirs()
 
         self.logger.info("Copying %s to %s" %(source.path, target.path))
         source.copyTo(target)
