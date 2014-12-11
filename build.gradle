@@ -1,7 +1,6 @@
-defaultTasks 'check'
-
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -9,19 +8,26 @@ buildscript {
     }
 }
 
-apply plugin: "com.github.hierynomus.license"
-apply plugin: 'java'
-apply plugin: 'idea'
+defaultTasks 'check'
 
-group = 'com.xebialabs.deployit.community'
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
 version = '0.0.3-SNAPSHOT'
+group = 'com.xebialabs.overthere'
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'license'
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 
 dependencies {
     compile "com.xebialabs.overthere:overthere:2.4.4"
@@ -45,4 +51,80 @@ license {
     strictCheck true
     exclude('testfiles/*')
     exclude('directorycompare/*')
+}
+
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+license {
+    header project.file('HEADER')
+    strictCheck true
+    exclude('testfiles/*')
+    exclude('directorycompare/*')
+}
+
+signing {
+    required { gradle.taskGraph.hasTask('uploadArchives') }
+    sign configurations.archives
+}
+
+uploadArchives {
+    if(project.hasProperty('sonatypeUsername')) {
+        repositories.mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            configuration = configurations.archives
+
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                name 'Overtherepy'
+                description 'Jython wrapper for Overthere'
+                packaging 'jar'
+                url 'https://github.com/xebialabs-community/overthere-pylib'
+                inceptionYear '2014'
+
+                scm {
+                    url 'https://github.com/xebialabs-community/overthere-pylib'
+                }
+
+                licenses {
+                    license {
+                        name 'GPLv2 with XebiaLabs FLOSS License Exception'
+                        url 'https://github.com/xebialabs/overthere/blob/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'rnaidoo'
+                        name 'Ravan Naidoo'
+                        url 'http://www.xebialabs.com/'
+                        email 'rnaidoo@xebialabs.com'
+                        roles {
+                            role 'Developer'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
