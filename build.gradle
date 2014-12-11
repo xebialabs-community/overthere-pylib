@@ -10,7 +10,7 @@ buildscript {
 
 defaultTasks 'check'
 
-version = '0.0.3-SNAPSHOT'
+version = '0.0.3'
 group = 'com.xebialabs.overthere'
 
 apply plugin: 'idea'
