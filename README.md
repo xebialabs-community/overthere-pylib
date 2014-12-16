@@ -1,9 +1,59 @@
-#overthere-pylib
-===============
+<a name="toc"></a>
+# Table of Contents
 
-Jython wrapper for [Overthere](http://https://github.com/xebialabs/overthere) remoting library
+* [Introduction](#introduction)
+* [Getting Overtherepy](#getting_overtherepy)
+	* [Depending on Overtherepy](#depending_on_overtherepy)
+	* [Building Overtherepy](#building_overtherepy)
+* [Programming Overtherepy](#programming_overtherepy) 
+* [API Reference](#api_overtherepy)
 
-## Basic Usage
+
+<a name="introduction"></a>
+# Introduction
+
+Overtherepy is a Jython wrapper library around [Overthere](https://github.com/xebialabs/overthere) to manipulate files and execute processes on remote hosts, i.e. do stuff "over there". 
+
+Overtherepy is available under the [GPLv2 with XebiaLabs FLOSS License Exception](https://raw.github.com/xebialabs/overthere/master/LICENSE).
+
+<a name="getting_overtherepy"></a>
+# Getting Overtherepy
+
+To get Overtherepy, you have two options:
+
+1. Add a dependency to your project.
+1. Build Overtherepy yourself.
+
+
+Binary releases of Overtherepy can be downloaded [straight from the Maven Central repository](http://search.maven.org/#artifactdetails%7Ccom.xebialabs.overthere%7Covertherepy%7C0.0.3%7Cjar) or from [Github releases](https://github.com/xebialabs-community/overthere-pylib/releases/download/v0.0.3/overtherepy-0.0.3.jar)
+
+<a name="depending_on_overtherepy"></a>
+## Depending on Overtherepy
+
+1. If your project is built with Maven, add the following dependency to the pom.xml:
+
+		<dependency>
+			<groupId>com.xebialabs.overthere</groupId>
+			<artifactId>overtherepy</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+
+1. If your project is built using another build tool that uses the Maven Central repository, translate these dependencies into the format used by your build tool.
+
+<a name="building_overtherepy"></a>
+## Building Overtherepy
+
+1. Install [Gradle 1.0](http://www.gradle.org/) or up.
+1. Clone the Overthere repository.
+1. Run the command `gradle clean build`.
+
+
+<a name="programming_overtherepy"></a>
+# Programming Overtherepy
+
+To program Overtherepy, browse the source code and browse the [Overtherepy PyDoc](./api-docs/overtherepy.md).
+Below gives you a basic usage example.
+
 
 ### Setup connection settings
 
@@ -42,7 +92,7 @@ host = OverthereHost(cifsOpts)
 session =  OverthereHostSession(host)
 
 f = session.upload_classpath_resource_to_work_dir("testfiles/echo.sh", executable=True)
-response = self._session.execute([f.path, "ping"], check_success=False)
+response = session.execute([f.path, "ping"], check_success=False)
 if response.rc != 0:
 	print "Failed to execute command"
 	print response.stderr
@@ -63,9 +113,10 @@ with session:
 	# do stuff
 </pre>
 
+<a name="api_overtherepy"></a>
 ### API Reference
 
-Refer to  [Overtherepy Module Api Documentation](./api-docs/overtherepy.md) for a complete API reference.
+Refer to  [Overtherepy PyDoc](./api-docs/overtherepy.md) for a complete API reference.
 Below is a description of the main _OverthereHostSession_ class.
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">

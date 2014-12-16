@@ -51,6 +51,7 @@
 
 <dl><dt><a name="BashScriptBuilder-build"><strong>build</strong></a>(self)</dt></dl>
 
+<dl><dt><a name="BashScriptBuilder-set_env_var"><strong>set_env_var</strong></a>(self, k, v)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -71,6 +72,8 @@
 <dl><dt><a name="BatchScriptBuilder-add_rc_check"><strong>add_rc_check</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="BatchScriptBuilder-build"><strong>build</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="BatchScriptBuilder-set_env_var"><strong>set_env_var</strong></a>(self, k, v)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -250,6 +253,7 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 <dl><dt><a name="OverthereHostSession-execute"><strong>execute</strong></a>(self, cmd, check_success<font color="#909090">=True</font>, suppress_streaming_output<font color="#909090">=False</font>)</dt><dd><tt>Executes&nbsp;the&nbsp;command&nbsp;on&nbsp;the&nbsp;remote&nbsp;system&nbsp;and&nbsp;returns&nbsp;the&nbsp;result<br>
 :param&nbsp;cmd:&nbsp;Command&nbsp;line&nbsp;as&nbsp;an&nbsp;Array&nbsp;of&nbsp;Strings&nbsp;or&nbsp;String.&nbsp;&nbsp;A&nbsp;String&nbsp;is&nbsp;split&nbsp;by&nbsp;space.<br>
 :param&nbsp;check_success:&nbsp;checks&nbsp;the&nbsp;return&nbsp;code&nbsp;is&nbsp;0.&nbsp;On&nbsp;failure&nbsp;the&nbsp;output&nbsp;is&nbsp;printed&nbsp;to&nbsp;stdout&nbsp;and&nbsp;a&nbsp;system&nbsp;exit&nbsp;is&nbsp;performed<br>
+:param&nbsp;suppress_streaming_output:&nbsp;&nbsp;suppresses&nbsp;the&nbsp;output&nbsp;of&nbsp;the&nbsp;execution&nbsp;when&nbsp;the&nbsp;session&nbsp;is&nbsp;in&nbsp;streaming&nbsp;mode.<br>
 :return:&nbsp;<a href="#CommandResponse">CommandResponse</a></tt></dd></dl>
 
 <dl><dt><a name="OverthereHostSession-get_conn"><strong>get_conn</strong></a>(self)</dt><dd><tt>Get&nbsp;connection&nbsp;to&nbsp;host.&nbsp;&nbsp;Create&nbsp;new&nbsp;connection&nbsp;if&nbsp;one&nbsp;does&nbsp;not&nbsp;exist.<br>
@@ -408,4 +412,4 @@ Data descriptors inherited from <a href="#LocalConnectionOptions">LocalConnectio
 :param&nbsp;s:&nbsp;string&nbsp;to&nbsp;check<br>
 :return:&nbsp;True&nbsp;if&nbsp;not&nbsp;empty</tt></dd></dl>
 
-</td></tr></table></td></tr></table><p>
+</td></tr></table></td></tr></table>
