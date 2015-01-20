@@ -45,6 +45,8 @@ Binary releases of Overtherepy can be downloaded [straight from the Maven Centra
 
 1. Install [Gradle 1.0](http://www.gradle.org/) or up.
 1. Clone the Overthere repository.
+1. Define the jython interpreter executable in the `~/.gradle/gradle.properties`.
+	* jythonInterpreter=$JYTHON_HOME/bin/jython  
 1. Run the command `gradle clean build`.
 
 
@@ -63,7 +65,7 @@ Depending on the target host, the following options are available :
 * _overtherepy.CifsConnectionOptions_
 * _overtherepy.LocalConnectionOptions_
 
-Please refer to the [Overthere](http://https://github.com/xebialabs/overthere) documentation for available options. Options are passed to the contructor as named parameters
+Please refer to the [Overthere](https://github.com/xebialabs/overthere) documentation for available options. Options are passed to the contructor as named parameters
 
 <pre>
 from overtherepy import LocalConnectionOptions, OverthereHost, OverthereHostSession
