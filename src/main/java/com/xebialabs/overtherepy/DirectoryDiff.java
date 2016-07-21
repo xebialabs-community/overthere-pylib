@@ -25,6 +25,7 @@ package com.xebialabs.overtherepy;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,9 +37,9 @@ import com.google.common.collect.Sets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.google.common.io.ByteStreams;
+import com.google.common.io.ByteSource;
 import com.google.common.io.InputSupplier;
-
+import com.google.common.io.Files;
 import com.xebialabs.overthere.OverthereFile;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -89,12 +90,9 @@ public class DirectoryDiff {
      * @throws IOException
      */
     public static String md5(final OverthereFile file) throws IOException {
-        return ByteStreams.hash(new InputSupplier<InputStream>() {
-            @Override
-            public InputStream getInput() throws IOException {
-                return file.getInputStream();
-            }
-        }, Hashing.md5()).toString();
+        File sourceFile = new File(file.getPath());
+        ByteSource source = Files.asByteSource(sourceFile);
+        return source.hash(Hashing.md5()).toString();
     }
 
     /*
@@ -164,12 +162,9 @@ public class DirectoryDiff {
 
     private HashCode hash(final OverthereFile file, HashFunction hashFunction)
             throws IOException {
-        return ByteStreams.hash(new InputSupplier<InputStream>() {
-            @Override
-            public InputStream getInput() throws IOException {
-                return file.getInputStream();
-            }
-        }, hashFunction);
+        File sourceFile = new File(file.getPath());
+        ByteSource source = Files.asByteSource(sourceFile);
+        return source.hash(hashFunction);
     }
 
     public static class DirectoryChangeSet {
