@@ -23,12 +23,17 @@
 
 package com.xebialabs.overtherepy;
 
-import java.io.IOException;
-import java.io.InputStream;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newHashSet;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -38,32 +43,27 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteSource;
-import com.google.common.io.InputSupplier;
 import com.google.common.io.Files;
 import com.xebialabs.overthere.OverthereFile;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Sets.newHashSet;
 
 /**
  * Compares 2 directories and determines which files were added, removed or changed.
  */
 public class DirectoryDiff {
 
-    private OverthereFile leftSide;
-    private OverthereFile rightSide;
-    private HashFunction hashFunction = Hashing.goodFastHash(32);
-
+    private final OverthereFile leftSide;
+    private final OverthereFile rightSide;
+    private final HashFunction hashFunction = Hashing.goodFastHash(32);
 
     /**
      * Constructor
      *
-     * @param leftSide directory to compare
-     * @param rightSide directory to compare
+     * @param leftSide
+     *            directory to compare
+     * @param rightSide
+     *            directory to compare
      */
-    public DirectoryDiff(OverthereFile leftSide, OverthereFile rightSide) {
+    public DirectoryDiff(final OverthereFile leftSide, final OverthereFile rightSide) {
         checkArgument(leftSide.isDirectory(), "File [%s] must be a directory.", leftSide);
         checkArgument(rightSide.isDirectory(), "File [%s] must be a directory.", rightSide);
         this.leftSide = leftSide;
@@ -85,7 +85,8 @@ public class DirectoryDiff {
     /**
      * Calculate an MD5 hash for the given file.
      *
-     * @param file for which MD5 should be calculated.
+     * @param file
+     *            for which MD5 should be calculated.
      * @return MD5 hash
      * @throws IOException
      */
@@ -96,33 +97,34 @@ public class DirectoryDiff {
     }
 
     /*
-     * Intermediate method for recursion, so that objects created in the compareDirectory method can be
-      * garbage collected.
+     * Intermediate method for recursion, so that objects created in the compareDirectory method can be garbage collected.
      */
-    private void compareDirectoryRecursive(OverthereFile left, OverthereFile right, DirectoryChangeSet changeSet) throws IOException {
+    private void compareDirectoryRecursive(final OverthereFile left, final OverthereFile right, final DirectoryChangeSet changeSet)
+            throws IOException {
         List<OverthereFile[]> dirsToRecurse = compareDirectory(left, right, changeSet);
-        for(OverthereFile[] leftAndRightDir : dirsToRecurse) {
+        for (OverthereFile[] leftAndRightDir : dirsToRecurse) {
             compareDirectoryRecursive(leftAndRightDir[0], leftAndRightDir[1], changeSet);
         }
     }
 
-    private List<OverthereFile[]> compareDirectory(OverthereFile left, OverthereFile right, DirectoryChangeSet changeSet) throws IOException {
+    private List<OverthereFile[]> compareDirectory(final OverthereFile left, final OverthereFile right, final DirectoryChangeSet changeSet)
+            throws IOException {
         Set<FileWrapper> leftFiles = listFiles(left);
         Set<FileWrapper> rightFiles = listFiles(right);
 
-        //find new files
+        // find new files
         Set<FileWrapper> filesAdded = Sets.difference(rightFiles, leftFiles);
-        //find removed files
+        // find removed files
         Set<FileWrapper> filesRemoved = Sets.difference(leftFiles, rightFiles);
 
-        //find changed files
+        // find changed files
         Set<FileWrapper> potentialChangedFiles = newHashSet(leftFiles);
         potentialChangedFiles.removeAll(filesRemoved);
 
-        //filter out directories
+        // filter out directories
         Map<FileWrapper, FileWrapper> rightFilesIndex = newHashMap();
         for (FileWrapper file : rightFiles) {
-            rightFilesIndex.put(file,file);
+            rightFilesIndex.put(file, file);
         }
 
         Set<FileWrapper> filesChanged = newHashSet();
@@ -135,7 +137,7 @@ public class DirectoryDiff {
             }
         }
 
-        Function<FileWrapper,OverthereFile> unwrapFunction = new Function<FileWrapper, OverthereFile>() {
+        Function<FileWrapper, OverthereFile> unwrapFunction = new Function<FileWrapper, OverthereFile>() {
             @Override
             public OverthereFile apply(final FileWrapper input) {
                 return input.getFile();
@@ -149,28 +151,26 @@ public class DirectoryDiff {
         Set<FileWrapper> potentialChangedDirectories = Sets.filter(potentialChangedFiles, FileWrapperPredicates.DIRECTORY);
         List<OverthereFile[]> directoriesStillToCheck = newArrayList();
         for (FileWrapper potentialChangedDirectory : potentialChangedDirectories) {
-            directoriesStillToCheck.add(new OverthereFile[]{potentialChangedDirectory.getFile(), rightFilesIndex.get(potentialChangedDirectory).getFile()});
+            directoriesStillToCheck.add(
+                    new OverthereFile[] { potentialChangedDirectory.getFile(), rightFilesIndex.get(potentialChangedDirectory).getFile() });
         }
         return directoriesStillToCheck;
     }
 
-
-
-    private Set<FileWrapper> listFiles(OverthereFile dir) {
+    private Set<FileWrapper> listFiles(final OverthereFile dir) {
         return newHashSet(Lists.transform(newArrayList(dir.listFiles()), new WrapFile()));
     }
 
-    private HashCode hash(final OverthereFile file, HashFunction hashFunction)
-            throws IOException {
+    private HashCode hash(final OverthereFile file, final HashFunction hashFunction) throws IOException {
         File sourceFile = new File(file.getPath());
         ByteSource source = Files.asByteSource(sourceFile);
         return source.hash(hashFunction);
     }
 
     public static class DirectoryChangeSet {
-        private List<OverthereFile> removed = newArrayList();
-        private List<OverthereFile> added = newArrayList();
-        private List<OverthereFile> changed = newArrayList();
+        private final List<OverthereFile> removed = newArrayList();
+        private final List<OverthereFile> added = newArrayList();
+        private final List<OverthereFile> changed = newArrayList();
 
         public List<OverthereFile> getAdded() {
             return added;
@@ -186,7 +186,7 @@ public class DirectoryDiff {
 
     }
 
-    static class WrapFile implements Function<OverthereFile,FileWrapper> {
+    static class WrapFile implements Function<OverthereFile, FileWrapper> {
 
         @Override
         public FileWrapper apply(final OverthereFile input) {
@@ -195,9 +195,9 @@ public class DirectoryDiff {
     }
 
     static class FileWrapper {
-        private OverthereFile file;
+        private final OverthereFile file;
 
-        FileWrapper(OverthereFile file ) {
+        FileWrapper(final OverthereFile file) {
             this.file = file;
         }
 
@@ -213,7 +213,7 @@ public class DirectoryDiff {
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof FileWrapper) {
-                return file.getName().equals(((FileWrapper)obj).file.getName());
+                return file.getName().equals(((FileWrapper) obj).file.getName());
             }
             return false;
         }
@@ -225,17 +225,17 @@ public class DirectoryDiff {
     }
 
     enum FileWrapperPredicates implements Predicate<FileWrapper> {
-        FILE{
+        FILE {
 
             @Override
-            public boolean apply(final FileWrapper input){
+            public boolean apply(final FileWrapper input) {
                 return input.getFile().isFile();
             }
         },
-        DIRECTORY{
+        DIRECTORY {
 
             @Override
-            public boolean apply(final FileWrapper input){
+            public boolean apply(final FileWrapper input) {
                 return input.getFile().isDirectory();
             }
         }
