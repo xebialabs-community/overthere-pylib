@@ -1,17 +1,15 @@
 language: java
 before_install:
 - wget -O jython.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar;
-      java -jar jython.jar -s -d /tmp/jython;
-      export PATH="/tmp/jython/bin:$PATH";
-      export INTERPRETER=/tmp/jython/bin/jython;
-      jython -h
+  java -jar jython.jar -s -d /tmp/jython; export PATH="/tmp/jython/bin:$PATH"; export
+  INTERPRETER=/tmp/jython/bin/jython; jython -h
 - mkdir -p ~/.gradle
 - echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
 script: gradle check -PjythonInterpreter=/tmp/jython/bin/jython
 deploy:
   provider: releases
   api_key:
-    secure: NAKq756CYk1hLJB22264cx7a8R7xk9PL6pwpUOVQkPXLe1YvZ+Nd9/nYhY9N4axNEgvJJppxOwhvQ6D47o3M3uAzbdElPg2fa08TiCtmnPAWOJdOBIqiyM3Z8dkIBubkMJ2qbdwlu3OUz/R01ZTGtD35uQ05SAPipI+6zzlv/IY=
+    secure: f05kP5HIuUyDXRdgfHVqYchcjqh21jkm9deh8gBo0UWJoR4yn4N+y+pLfvHApAACVU0B++c0x0d3/X2TAab6DdJHPfS8mCWL+Oxo6YdWNP//rjB2yfrxaOBfsPopyj/N3ivZmn3Pea9copFXE0uqEpGxOb1p61LK12NL9YKDedU=
   file_glob: true
   file: build/libs/*
   skip_cleanup: true
