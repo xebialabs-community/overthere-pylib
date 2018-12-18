@@ -1,12 +1,12 @@
 language: java
 before_install:
 - wget -O jython.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar;
-      java -jar jython.jar -s -d ~/jython;
-      export PATH="~/jython/bin:$PATH";
-      export INTERPRETER=~/jython/bin/jython;
+      java -jar jython.jar -s -d /tmp/jython;
+      export PATH="/tmp/jython/bin:$PATH";
+      export INTERPRETER=/tmp/jython/bin/jython;
       jython -h
 - mkdir -p ~/.gradle
-- echo jythonInterpreter=~/jython/bin/jython >> ~/.gradle/gradle.properties
+- echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
 script: gradle check -PjythonInterpreter=~/jython/bin/jython
 deploy:
   provider: releases
