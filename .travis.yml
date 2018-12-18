@@ -5,8 +5,8 @@ before_install:
       export PATH="~/jython/bin:$PATH";
       export INTERPRETER=~/jython/bin/jython;
 - mkdir -p ~/.gradle
-- echo jythonInterpreter=jython >> ~/.gradle/gradle.properties
-script: gradle check -PjythonInterpreter=~/jython/bin/jython
+- echo jythonInterpreter=~/jython/bin/jython >> ~/.gradle/gradle.properties
+script: gradle check -PjythonInterpreter=jython
 deploy:
   provider: releases
   api_key:
