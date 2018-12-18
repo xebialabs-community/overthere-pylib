@@ -6,8 +6,8 @@ before_install:
       export INTERPRETER=~/jython/bin/jython;
       jython -h
 - mkdir -p ~/.gradle
-- echo jythonInterpreter=jython >> ~/.gradle/gradle.properties
-script: gradle check -PjythonInterpreter=jython
+- echo jythonInterpreter=~/jython/bin/jython >> ~/.gradle/gradle.properties
+script: gradle check -PjythonInterpreter=~/jython/bin/jython
 deploy:
   provider: releases
   api_key:
