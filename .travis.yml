@@ -17,3 +17,6 @@ deploy:
     all_branches: true
     tags: true
     repo: xebialabs-community/overthere-pylib
+notifications:
+  slack:
+    secure: EstDXmwsid2lr2aT8eMKbs4sILngIFFhdK9aglsieOWczjrARmzdgoVk/k3d3rKyLrraeKK6oFa6LkhfvbcYyQVCJDG8Ktu7IkZAb8AX9PMCVbrTPYbHrv9nQCiFJWwBxiD8+ImGEMlrX9UProajRjU1L97S8EmMikUvYk3n5W8=
