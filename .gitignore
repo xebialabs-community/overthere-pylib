@@ -56,3 +56,4 @@ integration/data/.cache
 *.swp
 
 site-packages/
+.jython_cache/

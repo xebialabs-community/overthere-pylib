@@ -688,12 +688,13 @@ class OverthereHostSession(object):
             target.setExecutable(executable)
         return target
 
-    def execute(self, cmd, check_success=True, suppress_streaming_output=False):
+    def execute(self, cmd, check_success=True, suppress_streaming_output=False, wait_time=1):
         """
         Executes the command on the remote system and returns the result
         :param cmd: Command line as an Array of Strings or String.  A String is split by space.
         :param check_success: checks the return code is 0. On failure the output is printed to stdout and a system exit is performed
         :param suppress_streaming_output:  suppresses the output of the execution when the session is in streaming mode.
+        :param wait_time:  wait time in second after launching the command and capture the result, default 1 second
         :return: CommandResponse
         """
         if isinstance(cmd, basestring):
@@ -714,7 +715,7 @@ class OverthereHostSession(object):
 
         rc = self.get_conn().execute(so_handler, se_handler, cmdline)
         #wait for output to drain
-        time.sleep(1)
+        time.sleep(wait_time)
 
         response = CommandResponse(rc=rc, stdout=capture_so_handler.outputLines, stderr=capture_se_handler.outputLines)
 
