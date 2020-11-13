@@ -698,7 +698,8 @@ class OverthereHostSession(object):
         :return: CommandResponse
         """
         if isinstance(cmd, basestring):
-            cmd = cmd.split()
+            import shlex
+            cmd = shlex.split(cmd)
 
         cmdline = CmdLine.build(cmd)
         capture_so_handler = CapturingOverthereExecutionOutputHandler.capturingHandler()

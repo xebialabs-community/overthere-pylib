@@ -106,6 +106,13 @@ class TestOverthereSession(object):
         eq_(response['stdout'][0], "Hi ping")
         eq_(response['stdout'][1], "Exiting with 1")
 
+    def test_execute_check_success_turned_off_and_spaces_in_parameters(self):
+        f = self._session.upload_classpath_resource_to_work_dir("testfiles/echo.sh", executable=True)
+        response = self._session.execute("%s 'ping pong' 2" % f.path, check_success=False)
+        eq_(response.rc, 2)
+        eq_(response['stdout'][0], "Hi ping pong")
+        eq_(response['stdout'][1], "Exiting with 2")
+
     def test_with_support(self):
         s = OverthereHostSession(self._linuxhost)
         with s:

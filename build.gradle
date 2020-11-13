@@ -125,6 +125,15 @@ uploadArchives {
                             role 'Developer'
                         }
                     }
+                    developer {
+                        id 'bmoussaud'
+                        name 'Benoit Moussaud'
+                        url 'http://www.digital.ai/'
+                        email 'bmoussaud@digital.ai'
+                        roles {
+                            role 'Developer'
+                        }
+                    }
                 }
             }
         }
