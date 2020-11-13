@@ -11,12 +11,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Dowload Jython
-        uses: wei/wget@v1
-        with:
-          args: -O /tmp/jython-installer.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar
+      - name: Install wget
+        run: sudo apt-get install wget
       - name: Install Jython
         run: |
+          wget -O /tmp/jython-installer.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar
           java -jar /tmp/jython-installer.jar -s -d /tmp/jython
           export PATH="/tmp/jython/bin:$PATH"
           export INTERPRETER=/tmp/jython/bin/jython
