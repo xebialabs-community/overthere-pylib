@@ -217,3 +217,26 @@ When&nbsp;there&nbsp;are&nbsp;files&nbsp;present&nbsp;in&nbsp;the&nbsp;target&nb
 :return:&nbsp;com.xebialabs.overthere.OverthereFile</tt></dd></dl>
 
 </td></tr></table>  
+
+
+## References
+
+## How to release a new  candidate version
+
+```
+$./gradlew candidate
+```
+
+This command automaticaly tags the version, pushes it remotely and
+trigger a release build. The script: `./buildViaTravis.sh` manages to
+run the right command.
+
+## How to release a new version
+
+```
+$./gradlew final
+```
+
+This command automaticaly tags the version, pushes it remotely and
+trigger a release build. The script: `./buildViaTravis.sh` manages to
+run the right command.
