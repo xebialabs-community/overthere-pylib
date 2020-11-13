@@ -57,3 +57,4 @@ integration/data/.cache
 
 site-packages/
 .jython_cache/
+out.sh
