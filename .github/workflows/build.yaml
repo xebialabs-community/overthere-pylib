@@ -11,6 +11,20 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Dowload Jython
+          uses: wei/wget@v1
+          with:
+            args: -O /tmp/jython-installer.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar
+      - name: Install Jython
+        run: |
+          java -jar /tmp/jython-installer.jar -s -d /tmp/jython
+          export PATH="/tmp/jython/bin:$PATH"
+          export INTERPRETER=/tmp/jython/bin/jython
+          jython -h
+      - name: Gradle Configuration to use Jython
+          run: |
+            mkdir -p ~/.gradle
+            echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
       - name: Build with Gradle
-        run: ./gradlew clean build --info --stacktrace
+        run: ./gradlew clean build --info --stacktrace -PjythonInterpreter=/tmp/jython/bin/jython
   
