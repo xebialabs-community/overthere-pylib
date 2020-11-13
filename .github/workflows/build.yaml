@@ -22,7 +22,7 @@ jobs:
           export INTERPRETER=/tmp/jython/bin/jython
           jython -h
       - name: Gradle Configuration to use Jython
-          run: |
+        run: |
           mkdir -p ~/.gradle
           echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
       - name: Build with Gradle
