@@ -27,7 +27,7 @@ jobs:
           mkdir -p ~/.gradle
           echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
       - name: Build with Gradle
-        run: ./gradlew clean build --info --stacktrace -PjythonInterpreter=/tmp/jython/bin/jython
+        run: ./gradlew -Prelease.useLastTag=true candidate --info --stacktrace -PjythonInterpreter=/tmp/jython/bin/jython
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
