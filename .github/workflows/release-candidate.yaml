@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Build with Gradle
-        run: ./gradlew -Prelease.useLastTag=true candidate --info --stacktrace
+        run: ./gradlew -Prelease.useLastTag=true candidate --info --stacktrace -PjythonInterpreter=/tmp/jython/bin/jython
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
