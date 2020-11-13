@@ -12,9 +12,9 @@ jobs:
         with:
           java-version: 1.8
       - name: Dowload Jython
-          uses: wei/wget@v1
-          with:
-            args: -O /tmp/jython-installer.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar
+        uses: wei/wget@v1
+        with:
+          args: -O /tmp/jython-installer.jar http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.1/jython-installer-2.7.1.jar
       - name: Install Jython
         run: |
           java -jar /tmp/jython-installer.jar -s -d /tmp/jython
