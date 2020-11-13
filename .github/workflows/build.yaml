@@ -23,8 +23,8 @@ jobs:
           jython -h
       - name: Gradle Configuration to use Jython
           run: |
-            mkdir -p ~/.gradle
-            echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
+          mkdir -p ~/.gradle
+          echo jythonInterpreter=/tmp/jython/bin/jython >> ~/.gradle/gradle.properties
       - name: Build with Gradle
         run: ./gradlew clean build --info --stacktrace -PjythonInterpreter=/tmp/jython/bin/jython
   
